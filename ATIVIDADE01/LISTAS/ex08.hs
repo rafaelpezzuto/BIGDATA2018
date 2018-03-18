@@ -6,6 +6,8 @@
 
 module Main where
 
+import Control.Parallel.Strategies
+
 isPar x
     | x `rem` 2 == 0 = True
     | otherwise = False
@@ -15,11 +17,22 @@ collatz x
     | isPar x = x `div` 2
     | not (isPar x) = 3 * x + 1
 
-collatzLen :: Integer -> Int
-collatzLen x = length (map collatz (reverse([1..x])))
+collatzLen :: Integer -> Integer
+collatzLen x = collatzLen' x 1
+    where
+        collatzLen' 1 a = 1
+        collatzLen' x a = collatzLen (collatz x) + 1
+
+geraListaCollatzLen = [collatzLen x | x <- [1..1000000]] `using` parListChunk 50000 rseq
+projectEuler14 = maximum (zip geraListaCollatzLen [1..])
 
 main :: IO()
 main = do
-    print(collatzLen 500)
+    print("(VALOR MAXIMO,NUMERO)")
+    print(projectEuler14)
 
--- incompleto
+-- 19.673s
+-- saida: (525,837799)
+-- configuracao
+--   intel i5 4210U 1.7 GHz
+--   8 GB RAM

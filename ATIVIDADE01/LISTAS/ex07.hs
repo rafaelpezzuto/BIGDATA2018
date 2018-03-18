@@ -15,11 +15,13 @@ collatz x
     | isPar x = x `div` 2
     | not (isPar x) = 3 * x + 1
 
-collatzLen :: Integer -> Int
-collatzLen x = length (map collatz (reverse([1..x])))
+collatzLen :: Integer -> Integer
+collatzLen x = collatzLen' x 1
+    where
+        collatzLen' 1 a = 1
+        collatzLen' x a = collatzLen (collatz x) + 1
 
 main :: IO()
 main = do
-    print(collatzLen 500)
-
--- incompleto
+    print(collatzLen 77031)
+    print(collatzLen 837799)

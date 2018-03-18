@@ -21,5 +21,8 @@ main :: IO()
 main = do
     print(projectEuler5)
 
--- demorou 1237.251s para executar no meu Ryzen 1600 (com 6 cores e 12 threads)
+-- demorou 1237.251s para executar 
 -- encontrou o valor 232792560
+-- configuracao usada
+-- Ryzen 1600 (com 6 cores/12 threads a 3.4GHz)
+-- 16 GB RAM a 2933 MHz

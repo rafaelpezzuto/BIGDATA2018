@@ -18,8 +18,11 @@ fib = 1 : 2 : prox fib
 
 main :: IO()
 main = do
-    print (sum([x | x <- filter(\< 400,fib), isPar x] `using` parListChunk 10000 rseq))
+    print (sum([x | x <- fib, isPar x, x <= 400] `using` parListChunk 10000 rseq))
 
 -- soma resultou 4613732
--- limitei pelo 33 termo de fibo que eh por volta de 3,5 milhoes
--- o 34 ja ultrapassa 5 mi
+-- incompleto
+-- mudar estrategia para, caso lista fib chegue a um valor maior que 4000000
+--   parar geracao da lista
+--   filtrar impares
+--   realizar soma da lista resultante (pares menores ou iguais a 4000000)
